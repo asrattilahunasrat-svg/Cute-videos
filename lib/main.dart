@@ -39,7 +39,9 @@ class HomePage extends StatelessWidget {
       appBar: AppBar(
         title: const Text(
           'Cute Videos',
-          style: TextStyle(fontWeight: FontWeight.bold),
+          style: TextStyle(
+            fontWeight: FontWeight.bold,
+          ),
         ),
         actions: [
           IconButton(
@@ -70,7 +72,9 @@ class HomePage extends StatelessWidget {
         padding: const EdgeInsets.all(16),
         children: [
           _welcomeCard(),
+
           const SizedBox(height: 26),
+
           const Text(
             'Featured Videos',
             style: TextStyle(
@@ -78,7 +82,9 @@ class HomePage extends StatelessWidget {
               fontWeight: FontWeight.bold,
             ),
           ),
+
           const SizedBox(height: 12),
+
           VideoCard(
             title: 'Featured Video',
             category: 'Featured',
@@ -97,7 +103,9 @@ class HomePage extends StatelessWidget {
               );
             },
           ),
+
           const SizedBox(height: 28),
+
           const Text(
             'Free Videos',
             style: TextStyle(
@@ -105,32 +113,40 @@ class HomePage extends StatelessWidget {
               fontWeight: FontWeight.bold,
             ),
           ),
+
           const SizedBox(height: 12),
+
           ...List.generate(
             3,
-            (index) => Padding(
-              padding: const EdgeInsets.only(bottom: 12),
-              child: VideoListTile(
-                title: 'Free Video ${index + 1}',
-                category: 'Free',
-                paid: false,
-                onTap: () {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder: (_) => VideoDetailsPage(
-                        title: 'Free Video ${index + 1}',
-                        category: 'Free',
-                        paid: false,
-                        videoUrl: demoVideoUrl,
+            (index) {
+              final title = 'Free Video ${index + 1}';
+
+              return Padding(
+                padding: const EdgeInsets.only(bottom: 12),
+                child: VideoListTile(
+                  title: title,
+                  category: 'Free',
+                  paid: false,
+                  onTap: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (_) => VideoDetailsPage(
+                          title: title,
+                          category: 'Free',
+                          paid: false,
+                          videoUrl: demoVideoUrl,
+                        ),
                       ),
-                    ),
-                  );
-                },
-              ),
-            ),
+                    );
+                  },
+                ),
+              );
+            },
           ),
+
           const SizedBox(height: 16),
+
           const Text(
             'Premium Videos',
             style: TextStyle(
@@ -138,37 +154,46 @@ class HomePage extends StatelessWidget {
               fontWeight: FontWeight.bold,
             ),
           ),
+
           const SizedBox(height: 12),
+
           ...List.generate(
             3,
-            (index) => Padding(
-              padding: const EdgeInsets.only(bottom: 12),
-              child: VideoListTile(
-                title: 'Premium Video ${index + 1}',
-                category: 'Premium',
-                paid: true,
-                price: 20 + (index * 10),
-                onTap: () {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder: (_) => VideoDetailsPage(
-                        title: 'Premium Video ${index + 1}',
-                        category: 'Premium',
-                        paid: true,
-                        price: 20 + (index * 10),
-                        videoUrl: demoVideoUrl,
+            (index) {
+              final title = 'Premium Video ${index + 1}';
+              final price = 20 + (index * 10);
+
+              return Padding(
+                padding: const EdgeInsets.only(bottom: 12),
+                child: VideoListTile(
+                  title: title,
+                  category: 'Premium',
+                  paid: true,
+                  price: price,
+                  onTap: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (_) => VideoDetailsPage(
+                          title: title,
+                          category: 'Premium',
+                          paid: true,
+                          price: price,
+                          videoUrl: demoVideoUrl,
+                        ),
                       ),
-                    ),
-                  );
-                },
-              ),
-            ),
+                    );
+                  },
+                ),
+              );
+            },
           ),
         ],
       ),
-      bottomNavigationBar: const NavigationBar(
-        destinations: [
+
+      // NavigationBar is intentionally NOT const.
+      bottomNavigationBar: NavigationBar(
+        destinations: const [
           NavigationDestination(
             icon: Icon(Icons.home_outlined),
             selectedIcon: Icon(Icons.home),
@@ -219,7 +244,8 @@ class HomePage extends StatelessWidget {
           SizedBox(width: 15),
           Expanded(
             child: Text(
-              'Welcome to Cute Videos\nWatch your favorite videos.',
+              'Welcome to Cute Videos\n'
+              'Watch your favorite videos.',
               style: TextStyle(
                 fontSize: 17,
                 fontWeight: FontWeight.bold,
@@ -351,7 +377,9 @@ class VideoListTile extends StatelessWidget {
               ],
             ),
           ),
+
           const SizedBox(width: 13),
+
           Expanded(
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
@@ -365,7 +393,9 @@ class VideoListTile extends StatelessWidget {
                     fontSize: 15,
                   ),
                 ),
+
                 const SizedBox(height: 5),
+
                 Text(
                   category,
                   style: const TextStyle(
@@ -373,6 +403,7 @@ class VideoListTile extends StatelessWidget {
                     fontSize: 12,
                   ),
                 ),
+
                 if (paid && price != null) ...[
                   const SizedBox(height: 4),
                   Text(
@@ -386,6 +417,7 @@ class VideoListTile extends StatelessWidget {
               ],
             ),
           ),
+
           const Icon(
             Icons.chevron_right,
             color: Colors.white38,
@@ -423,7 +455,10 @@ class VideoDetailsPage extends StatelessWidget {
           if (paid)
             _lockedPreview()
           else
-            VideoPlayerWidget(videoUrl: videoUrl),
+            VideoPlayerWidget(
+              videoUrl: videoUrl,
+            ),
+
           Padding(
             padding: const EdgeInsets.all(18),
             child: Column(
@@ -436,14 +471,18 @@ class VideoDetailsPage extends StatelessWidget {
                     fontWeight: FontWeight.bold,
                   ),
                 ),
+
                 const SizedBox(height: 7),
+
                 Text(
                   category,
                   style: const TextStyle(
                     color: Colors.white60,
                   ),
                 ),
+
                 const SizedBox(height: 22),
+
                 if (paid)
                   _paymentButton(context)
                 else
@@ -453,7 +492,9 @@ class VideoDetailsPage extends StatelessWidget {
                       color: Colors.white70,
                     ),
                   ),
+
                 const SizedBox(height: 28),
+
                 const Text(
                   'About this video',
                   style: TextStyle(
@@ -461,7 +502,9 @@ class VideoDetailsPage extends StatelessWidget {
                     fontWeight: FontWeight.bold,
                   ),
                 ),
+
                 const SizedBox(height: 8),
+
                 const Text(
                   'This video will be connected to your own video '
                   'storage when the upload system is added.',
@@ -538,7 +581,9 @@ class VideoDetailsPage extends StatelessWidget {
           'UNLOCK FOR ${price ?? 0} BIRR',
         ),
         style: ElevatedButton.styleFrom(
-          padding: const EdgeInsets.symmetric(vertical: 15),
+          padding: const EdgeInsets.symmetric(
+            vertical: 15,
+          ),
         ),
       ),
     );
@@ -570,10 +615,18 @@ class _VideoPlayerWidgetState extends State<VideoPlayerWidget> {
     );
 
     _initializeVideoFuture = _controller.initialize();
+    _controller.addListener(_videoListener);
+  }
+
+  void _videoListener() {
+    if (mounted) {
+      setState(() {});
+    }
   }
 
   @override
   void dispose() {
+    _controller.removeListener(_videoListener);
     _controller.dispose();
     super.dispose();
   }
@@ -588,27 +641,35 @@ class _VideoPlayerWidgetState extends State<VideoPlayerWidget> {
             return _errorView();
           }
 
+          if (!_controller.value.isInitialized) {
+            return _errorView();
+          }
+
+          final aspectRatio = _controller.value.aspectRatio > 0
+              ? _controller.value.aspectRatio
+              : 16 / 9;
+
           return Column(
             children: [
               AspectRatio(
-                aspectRatio: _controller.value.aspectRatio > 0
-                    ? _controller.value.aspectRatio
-                    : 16 / 9,
-                child: VideoPlayer(_controller),
+                aspectRatio: aspectRatio,
+                child: Container(
+                  color: Colors.black,
+                  child: VideoPlayer(_controller),
+                ),
               ),
+
               Container(
                 color: const Color(0xFF18191E),
                 child: Row(
                   children: [
                     IconButton(
                       onPressed: () {
-                        setState(() {
-                          if (_controller.value.isPlaying) {
-                            _controller.pause();
-                          } else {
-                            _controller.play();
-                          }
-                        });
+                        if (_controller.value.isPlaying) {
+                          _controller.pause();
+                        } else {
+                          _controller.play();
+                        }
                       },
                       icon: Icon(
                         _controller.value.isPlaying
@@ -616,6 +677,7 @@ class _VideoPlayerWidgetState extends State<VideoPlayerWidget> {
                             : Icons.play_arrow,
                       ),
                     ),
+
                     Expanded(
                       child: VideoProgressIndicator(
                         _controller,
@@ -658,7 +720,8 @@ class _VideoPlayerWidgetState extends State<VideoPlayerWidget> {
           child: Padding(
             padding: EdgeInsets.all(20),
             child: Text(
-              'Unable to load video.\nPlease check your internet connection.',
+              'Unable to load video.\n'
+              'Please check your internet connection.',
               textAlign: TextAlign.center,
               style: TextStyle(
                 color: Colors.white70,
@@ -720,7 +783,9 @@ class ProfilePage extends StatelessWidget {
               color: Color(0xFFFF4F81),
             ),
           ),
+
           const SizedBox(height: 14),
+
           const Center(
             child: Text(
               'Guest User',
@@ -730,25 +795,32 @@ class ProfilePage extends StatelessWidget {
               ),
             ),
           ),
+
           const SizedBox(height: 25),
+
           ListTile(
             leading: const Icon(Icons.login),
             title: const Text('Sign In'),
             trailing: const Icon(Icons.chevron_right),
             onTap: () {},
           ),
+
           ListTile(
             leading: const Icon(Icons.person_add),
             title: const Text('Create Account'),
             trailing: const Icon(Icons.chevron_right),
             onTap: () {},
           ),
+
           ListTile(
-            leading: const Icon(Icons.account_balance_wallet_outlined),
+            leading: const Icon(
+              Icons.account_balance_wallet_outlined,
+            ),
             title: const Text('Wallet'),
             trailing: const Icon(Icons.chevron_right),
             onTap: () {},
           ),
+
           ListTile(
             leading: const Icon(Icons.settings_outlined),
             title: const Text('Settings'),
