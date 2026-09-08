@@ -29,9 +29,17 @@ jobs:
       - name: Build APK
         run: flutter build apk --release
 
+      - name: Check APK
+        run: |
+          echo "Checking APK..."
+          ls -lh build/app/outputs/flutter-apk/
+          test -f build/app/outputs/flutter-apk/app-release.apk
+          echo "APK found successfully."
+
       - name: Upload APK
         uses: actions/upload-artifact@v4
         with:
           name: cute-videos-apk
           path: build/app/outputs/flutter-apk/app-release.apk
           if-no-files-found: error
+          retention-days: 7
